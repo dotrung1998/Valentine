@@ -245,6 +245,7 @@ body {
   font-style: normal;
   transition: all 0.1s linear;
   -webkit-appearance: none;
+  appearance: none;
   background-color: transparent;
   border: solid 2px #d9534f;
   border-radius: 4px;
