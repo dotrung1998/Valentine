@@ -1,26 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Love letter for crush</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- tiktok meowish -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Love Animations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* === TAB STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .tab-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .tab-button {
+      background: transparent;
+      border: none;
+      padding: 15px 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #666;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-button:hover {
+      background: rgba(233, 83, 79, 0.1);
+      color: #d9534f;
+    }
+
+    .tab-button.active {
+      color: #d9534f;
+      border-bottom-color: #d9534f;
+      background: rgba(233, 83, 79, 0.05);
+    }
+
+    .tab-content {
+      display: none;
+      height: 100vh;
+      padding-top: 60px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* === LOVE LETTER STYLES (Tab 1) === */
+    #tab1 {
+      background-color: #f0e6f6;
+    }
+
+    #envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      margin-left: auto;
+      margin-right: auto;
+      top: 150px;
+      background-color: #d9534f;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .front {
+      position: absolute;
+      width: 0;
+      height: 0;
+      z-index: 3;
+    }
+
+    .flap {
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-bottom: 82px solid transparent;
+      border-top: 98px solid #d9534f;
+      transform-origin: top;
+      pointer-events: none;
+    }
+
+    .pocket {
+      border-left: 140px solid #f5a3a2;
+      border-right: 140px solid #f5a3a2;
+      border-bottom: 90px solid #ff6f61;
+      border-top: 90px solid transparent;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+
+    .letter {
+      position: relative;
+      background-color: #fff;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      height: 90%;
+      top: 5%;
+      border-radius: 6px;
+      box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+      font-family: "Dancing Script", cursive;
+    }
+
+    .letter:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .words {
+      position: absolute;
+      left: 10%;
+      width: 80%;
+      height: 14%;
+      background-color: #ffe6e6;
+    }
+
+    .words.line1 {
+      top: 10%;
+      width: 20%;
+      height: 7%;
+      font-size: 0.7rem;
+    }
+
+    .words.line2 {
+      top: 30%;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .words.line3 {
+      top: 50%;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .words.line4 {
+      top: 70%;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .open .flap {
+      transform: rotateX(180deg);
+      transition: transform 0.4s ease, z-index 0.6s;
+      z-index: 1;
+    }
+
+    .close .flap {
+      transform: rotateX(0deg);
+      transition: transform 0.4s 0.6s ease, z-index 1s;
+      z-index: 5;
+    }
+
+    .close .letter {
+      transform: translateY(0px);
+      transition: transform 0.4s ease, z-index 1s;
+      z-index: 1;
+    }
+
+    .open .letter {
+      transform: translateY(-100px);
+      transition: transform 0.4s 0.6s ease, z-index 0.6s;
+      z-index: 2;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 90px;
+      left: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: 0;
+      right: 10%;
+      pointer-events: none;
+    }
+
+    .heart:before,
+    .heart:after {
+      position: absolute;
+      content: "";
+      left: 50px;
+      top: 0;
+      width: 50px;
+      height: 80px;
+      background: #e60073;
+      border-radius: 50px 50px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+      pointer-events: none;
+    }
+
+    .heart:after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    .close .heart {
+      opacity: 0;
+      animation: none;
+    }
+
+    .a1 {
+      left: 20%;
+      transform: scale(0.6);
+      opacity: 1;
+      animation: slideUp 4s linear 1, sideSway 2s ease-in-out 4 alternate;
+      animation-fill-mode: forwards;
+      animation-delay: 0.7s;
+    }
+
+    .a2 {
+      left: 55%;
+      transform: scale(1);
+      opacity: 1;
+      animation: slideUp 5s linear 1, sideSway 4s ease-in-out 2 alternate;
+      animation-fill-mode: forwards;
+      animation-delay: 0.7s;
+    }
+
+    .a3 {
+      left: 10%;
+      transform: scale(0.8);
+      opacity: 1;
+      animation: slideUp 7s linear 1, sideSway 2s ease-in-out 6 alternate;
+      animation-fill-mode: forwards;
+      animation-delay: 0.7s;
+    }
+
+    @keyframes slideUp {
+      0% { top: 0; }
+      100% { top: -600px; }
+    }
+
+    @keyframes sideSway {
+      0% { margin-left: 0px; }
+      100% { margin-left: 50px; }
+    }
+
+    .envlope-wrapper {
+      height: 380px;
+    }
+
+    .reset {
+      text-align: center;
+    }
+
+    .reset button {
+      font-weight: 800;
+      font-style: normal;
+      transition: all 0.1s linear;
+      background-color: transparent;
+      border: solid 2px #d9534f;
+      border-radius: 4px;
+      color: #d9534f;
+      display: inline-block;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 5px;
+      padding: 10px;
+      line-height: 1em;
+      text-decoration: none;
+      min-width: 120px;
+      cursor: pointer;
+    }
+
+    .reset button:hover {
+      background-color: #d9534f;
+      color: #fff;
+    }
+
+    /* === I LOVE YOU ANIMATION STYLES (Tab 2) === */
+    #tab2 {
+      background: #000;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #ui .love {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -225px 0 0 -225px;
+      --i: 1;
+    }
+
+    #ui .love:last-child .love_word {
+      color: #ea80b0;
+      font-size: 1.4rem;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    #ui .love_word {
+      color: #ea80b0;
+      font-size: 1.4rem;
+      transform: translateY(-100%) rotateZ(-30deg);
+      text-shadow: 0 0 10px #fff;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    #ui .love_horizontal {
+      animation: horizontal 10000ms infinite alternate ease-in-out;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    #ui .love_vertical {
+      animation: vertical 20000ms infinite linear;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    @keyframes horizontal {
+      from { transform: translateX(0px); }
+      to { transform: translateX(450px); }
+    }
+
+    @keyframes vertical {
+      0% { transform: translateY(180px); }
+      10% { transform: translateY(45px); }
+      15% { transform: translateY(4.5px); }
+      18% { transform: translateY(0px); }
+      20% { transform: translateY(4.5px); }
+      22% { transform: translateY(34.61538px); }
+      24% { transform: translateY(64.28571px); }
+      25% { transform: translateY(112.5px); }
+      26% { transform: translateY(64.28571px); }
+      28% { transform: translateY(34.61538px); }
+      30% { transform: translateY(4.5px); }
+      32% { transform: translateY(0px); }
+      35% { transform: translateY(4.5px); }
+      40% { transform: translateY(45px); }
+      50% { transform: translateY(180px); }
+      71% { transform: translateY(428.57143px); }
+      72.5% { transform: translateY(441.17647px); }
+      75% { transform: translateY(450px); }
+      77.5% { transform: translateY(441.17647px); }
+      79% { transform: translateY(428.57143px); }
+      100% { transform: translateY(180px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- TAB NAVIGATION -->
+  <div class="tab-container">
+    <div class="tabs">
+      <button class="tab-button active" onclick="switchTab(1)">💌 Love Letter</button>
+      <button class="tab-button" onclick="switchTab(2)">💖 I Love You</button>
+    </div>
+  </div>
+
+  <!-- TAB 1: LOVE LETTER -->
+  <div id="tab1" class="tab-content active">
     <div class="envlope-wrapper">
       <div id="envelope" class="close">
         <div class="front flap"></div>
         <div class="front pocket"></div>
         <div class="letter">
-          <div class="words line1">Gửi: bé Kat</div>
-          <div class="words line2">Chúc bé Kat một ngày Valentine</div>
-          <div class="words line3">ngọt ngào như chô cô nết và</div>
-          <div class="words line4">nhận được nhìu tìn iu của tui nhé iu iu</div>
+          <div class="words line1">To: Crush</div>
+          <div class="words line2">Dear crush, you are so beautiful</div>
+          <div class="words line3">That every time i see you</div>
+          <div class="words line4">my world stops,</div>
         </div>
         <div class="hearts">
           <div class="heart a1"></div>
@@ -33,8 +405,88 @@
       <button id="open">Open</button>
       <button id="reset">Close</button>
     </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <!-- TAB 2: I LOVE YOU ANIMATION -->
+  <div id="tab2" class="tab-content">
+    <div id="ui"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // === TAB SWITCHING ===
+    function switchTab(tabNumber) {
+      // Update buttons
+      const buttons = document.querySelectorAll('.tab-button');
+      buttons.forEach((btn, index) => {
+        btn.classList.toggle('active', index + 1 === tabNumber);
+      });
+
+      // Update content
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach((content, index) => {
+        content.classList.toggle('active', index + 1 === tabNumber);
+      });
+
+      // Reset envelope animation when switching to tab 1
+      if (tabNumber === 1) {
+        const envelope = document.getElementById('envelope');
+        envelope.classList.remove('open');
+        envelope.classList.add('close');
+      }
+    }
+
+    // === LOVE LETTER ANIMATION (Tab 1) ===
+    $(document).ready(function () {
+      var envelope = $("#envelope");
+      var btn_open = $("#open");
+      var btn_reset = $("#reset");
+
+      envelope.click(function () {
+        open();
+      });
+
+      btn_open.click(function () {
+        open();
+      });
+
+      btn_reset.click(function () {
+        close();
+      });
+
+      function open() {
+        envelope.addClass("open").removeClass("close");
+      }
+
+      function close() {
+        envelope.addClass("close").removeClass("open");
+      }
+    });
+
+    // === I LOVE YOU ANIMATION (Tab 2) ===
+    const N = 100;
+    const ui = document.getElementById('ui');
+
+    for (let i = 1; i <= N; i++) {
+      const love = document.createElement('div');
+      love.className = 'love';
+      love.style.setProperty('--i', i);
+
+      const h = document.createElement('div');
+      h.className = 'love_horizontal';
+
+      const v = document.createElement('div');
+      v.className = 'love_vertical';
+
+      const word = document.createElement('div');
+      word.className = 'love_word';
+      word.textContent = 'I love you';
+
+      v.appendChild(word);
+      h.appendChild(v);
+      love.appendChild(h);
+      ui.appendChild(love);
+    }
+  </script>
+</body>
 </html>
